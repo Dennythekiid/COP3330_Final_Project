@@ -92,7 +92,7 @@ public class ProjectDriver {
 					        System.out.print("Enter the Class Number to add a Lab to: ");
 					        String classNumber = scanner.nextLine();
 					        try {
-					                addLabToClass(classNumber);  // You'll need to implement this method
+					                addLabToClass(classNumber);  
 					        } catch (FileNotFoundException e) {
 					                System.out.println("File error / file not found");
 					        }
