@@ -1,8 +1,7 @@
 package finalProject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class ProjectDriver {
 	private static Scanner scanner;
@@ -50,9 +49,6 @@ public class ProjectDriver {
 		String selection = mainMenu();
 		while(selection.compareTo("0") != 0) {
 			switch(selection) {
-			case "0":
-				System.out.println("Take Care!");
-				break;
 			case "1":
 				String stuSelect = studentMenu();
 				while((stuSelect.toUpperCase()).compareTo("X") != 0) {
@@ -80,11 +76,17 @@ public class ProjectDriver {
 						try {
 							findCourse(scan.nextLine());
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							System.out.println("File error / file not found");
 						}
 						break;
 					case "B":
+						System.out.print("Enter the Class/Lab Number: ");
+						scan = new Scanner(System.in);
+						try {
+							deleteCourse(scan.nextLine());
+						} catch (FileNotFoundException e) {
+							System.out.println("File error / file not found");
+						}
 						break;
 					case "C":
 						break;
@@ -96,6 +98,7 @@ public class ProjectDriver {
 			}
 			selection = mainMenu();
 		}
+		System.out.println("Take Care!");
 	}
 	public static void findCourse(String crn) throws FileNotFoundException {
 		String line = "";
@@ -121,6 +124,41 @@ public class ProjectDriver {
 			}
 		}
 		System.out.println("[ ]");
+	}
+	public static void deleteCourse(String crn) throws FileNotFoundException{
+		String line = "";
+		File file = new File("D:\\Users\\beric\\eclipse-workspace\\Final Project\\src\\finalProject\\lec.txt");
+		ArrayList <String> strList = new ArrayList<String>();
+		Scanner scanner = new Scanner(file);
+		while(scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			String[] arr = line.split(",");
+			if(arr[0].compareTo(crn) == 0) {
+				System.out.println("[ " + arr[0] + "," + arr[1] + "," + arr[2] + " ] deleted!");
+				if(scanner.hasNextLine()) {
+					line = scanner.nextLine();
+					arr = line.split(",");
+					while(arr.length < 3 && scanner.hasNextLine()) {
+						line = scanner.nextLine();
+						arr = line.split(",");
+					}
+					if(arr.length > 2)
+						strList.add(line);
+				}
+			}
+			else {
+				strList.add(line);
+			}
+		}
+		for(String s : strList) {
+			System.out.println(s);
+		}
+		PrintWriter pw = new PrintWriter(file);
+		while(strList.size() != 0) {
+			pw.println(strList.get(0));
+			strList.remove(0);
+		}
+		pw.close();
 	}
 }
 
