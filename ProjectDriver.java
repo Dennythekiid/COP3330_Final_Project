@@ -184,7 +184,7 @@ public class ProjectDriver {
 	    }
 
 	    if (classFound) {
-	        // Prompt the user for lab details
+	        // Prompts the user for lab details
 	        System.out.println("Enter Lab details (e.g., LabNumber Room): ");
 	        String labDetails = scanner.nextLine(); // Use the existing scanner instance
 	
